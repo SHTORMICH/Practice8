@@ -4,9 +4,9 @@ CREATE TABLE IF NOT EXISTS users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     login VARCHAR(16) UNIQUE NOT NULL
     );
-    LOCK TABLES `teams` WRITE;
+    LOCK TABLES teams WRITE;
 
-    INSERT INTO `teams` VALUES (1,'Petrov');
+    INSERT INTO teams VALUES (1,'Petrov');
 
     UNLOCK TABLES;
 
@@ -14,9 +14,9 @@ CREATE TABLE IF NOT EXISTS teams (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(16) UNIQUE NOT NULL
     );
-    LOCK TABLES `teams` WRITE;
+    LOCK TABLES teams WRITE;
 
-    INSERT INTO `teams` VALUES (1,'teamA');
+    INSERT INTO teams VALUES (1,'teamA');
 
     UNLOCK TABLES;
 
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS users_teams (
     teams_id INT PRIMARY KEY
     );
 
-    LOCK TABLE users_teams WRITE;
+    LOCK TABLES users_teams WRITE;
 
     INSERT INTO users_teams VALUES (1, 1);
 

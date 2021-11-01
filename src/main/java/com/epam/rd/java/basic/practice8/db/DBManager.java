@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class DBManager {
     private Connection connection;
-    private static DBManager dbManager = new DBManager();
+    private static final DBManager dbManager = new DBManager();
     private static final String SELECT_USERS = "SELECT * FROM users";
     private static final String SELECT_TEAMS = "SELECT * FROM teams";
     private static final String INSERT_USERS = "INSERT INTO users VALUES (?)";
