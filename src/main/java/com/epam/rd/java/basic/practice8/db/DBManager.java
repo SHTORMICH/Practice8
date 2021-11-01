@@ -4,9 +4,9 @@ import com.epam.rd.java.basic.practice8.db.entity.User;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class DBManager {
     private Connection connection;
@@ -21,10 +21,11 @@ public class DBManager {
     private static final String INSERT_USER_TO_TEAM = "INSERT INTO users_teams VALUES (?, ?)";
     private static final String DELETE_TEAM = "DELETE FROM teams WHERE name=?";
     private static final String UPDATE_TEAM = "UPDATE teams SET name=? WHERE id=?";
+    private Logger logger = Logger.getLogger(DBManager.class.getName());
 
     private DBManager() {
         try {
-            connection = getConnection("app");
+            connection = getConnection();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -37,16 +38,15 @@ public class DBManager {
         return dbManager;
     }
 
-    public Connection getConnection(String connectionUrl) throws SQLException {
-        try (InputStream input = new FileInputStream("app.properties")){
-            Properties properties = new Properties();
-            properties.load(input);
-            properties.getProperty(connectionUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public Connection getConnection() throws SQLException {
+        try (FileInputStream input = new FileInputStream("app.properties")) {
+            Properties prop = new Properties();
+            prop.load(input);
+            return DriverManager.getConnection(prop.getProperty("connection.url"));
+        } catch (IOException ex) {
+            logger.severe(ex.getMessage());
         }
-        System.out.println(connection);
-        return connection;
+        return null;
     }
 
     public boolean insertUser(User user) {
